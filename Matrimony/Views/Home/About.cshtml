@@ -1,0 +1,190 @@
+﻿@{
+    ViewBag.Title = "About Us - Matrimonial Site";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: auto; 
+            overflow-y: auto;
+        }
+
+        .top-menu {
+            background-color: #343a40;
+            color: white;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 10;
+        }
+
+            .top-menu h2 {
+                margin: 0;
+                color: white;
+                font-weight: 700;
+            }
+
+            .top-menu .menu-links {
+                display: flex;
+                gap: 15px;
+                margin-left: 700px;
+            }
+
+                .top-menu .menu-links a {
+                    color: #ffd700;
+                    font-weight: 500;
+                    text-decoration: none;
+                    padding: 7px 15px;
+                    border-radius: 5px;
+                    transition: background-color 0.3s, color 0.3s;
+                }
+
+                    .top-menu .menu-links a:hover {
+                        background-color: orangered;
+                        color: white;
+                    }
+
+            .top-menu .login-link {
+                color: #ffd700;
+                font-weight: 500;
+                text-decoration: none;
+                padding: 7px 15px;
+                border-radius: 5px;
+                transition: background-color 0.3s, color 0.3s;
+            }
+
+                .top-menu .login-link:hover {
+                    background-color: orangered;
+                    color: white;
+                }
+
+        .content-section {
+            padding: 80px 30px;
+            text-align: center;
+            background-color: #fff;
+            margin-top: 80px;
+        }
+
+            .content-section h1 {
+                font-size: 40px;
+                color: #343a40;
+                font-weight: 600;
+                margin-bottom: 20px;
+            }
+
+            .content-section p {
+                font-size: 18px;
+                color: #555;
+                max-width: 800px;
+                margin: 0 auto;
+                line-height: 1.6;
+            }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #343a40;
+            margin-top: 50px;
+            margin-bottom: 20px;
+        }
+
+        .section-content {
+            font-size: 16px;
+            color: #555;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            background-color: #343a40;
+            color: white;
+        }
+
+        .member-info {
+            margin-right: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-menu">
+        <h2>Tamil Tech Matrimony</h2>
+
+        <div class="menu-links">
+            <a href="/Home/About">About</a>
+            <a href="/Home/Contact">Contact</a>
+            <a href="/Home/SuccessStories">Success Stories</a>
+        </div>
+
+        <div class="member-info">
+            <span>Not a Member yet?</span>
+            <a href="/Home/Registration" class="login-link">Sign Up</a>
+        </div>
+    </div>
+
+    <div class="content-section">
+        <h1 style="margin-top:-50px;">About Tamil Tech Matrimony</h1>
+        <p>
+            Welcome to Tamil Tech Matrimony, a trusted platform dedicated to helping you find your perfect life partner.
+            Our mission is to provide a seamless, secure, and efficient matchmaking experience for individuals of Tamil descent,
+            offering personalized profiles and connecting families looking for their ideal match. We understand the importance of culture,
+            values, and personal preferences, and we strive to help you find a partner who shares your aspirations and values.
+        </p>
+        <p>
+            At Tamil Tech Matrimony, we believe in providing a user-friendly platform that makes the process of matchmaking simple, efficient,
+            and transparent. Our services are designed with privacy and security in mind, and we cater to a variety of needs, whether you are
+            looking for someone from your community, region, or background.
+        </p>
+        <p>
+            Join us and start your journey towards finding a meaningful connection. We are here to help you take the next step in your life.
+        </p>
+
+        <!-- New Content Sections -->
+        <h2 class="section-title">Our Mission</h2>
+        <p class="section-content">
+            Our mission is to provide a trustworthy, secure, and easy-to-use platform that helps individuals from Tamil communities connect and find a life partner. We are committed to building long-lasting relationships that are grounded in mutual respect, shared values, and cultural compatibility.
+        </p>
+
+        <h2 class="section-title">How It Works</h2>
+        <p class="section-content">
+            1. **Create Your Profile**: Register with Tamil Tech Matrimony and fill in your profile with details about your background, preferences, and aspirations.<br>
+            2. **Personalized Matching**: We use advanced algorithms to match you with compatible partners based on shared values, interests, and background.<br>
+            3. **Connect and Interact**: Start meaningful conversations with your matches and get to know each other better.<br>
+            4. **Find Your Partner**: Once you find someone who shares your goals, take the next steps toward building a beautiful future together.<br>
+        </p>
+
+        <h2 class="section-title">Our Vision</h2>
+        <p class="section-content">
+            To be the most trusted and innovative matrimonial platform that connects people based on their values, culture, and aspirations. We aim to foster love, trust, and respect in every relationship that begins through Tamil Tech Matrimony.
+        </p>
+
+        <h2 class="section-title">User Testimonials</h2>
+        <p class="section-content">
+            "Tamil Tech Matrimony helped me find my perfect match! The platform was user-friendly, and the matching process was spot on. I am so thankful for the team behind it, and I highly recommend it!" - **Rajesh & Priya**<br><br>
+            "A big thank you to Tamil Tech Matrimony for helping me find my life partner. The journey was easy, and the platform made sure we were well-matched. We are now happily married!" - **Kumar & Anjali**
+        </p>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Tamil Tech Matrimony. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

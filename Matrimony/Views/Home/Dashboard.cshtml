@@ -1,0 +1,248 @@
+﻿@model IEnumerable<Matrimony.Models.Profile>
+
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+
+<div class="container mt-5">
+
+    <div class="user-info" style="margin-top:-25px;">
+        <div class="text-center mb-2">
+            @if (Session["FirstName"] != null && Session["LastName"] != null)
+            {
+                <h4>Welcome, @Session["FirstName"] @Session["LastName"]</h4>
+            }
+            else
+            {
+                <h4>Welcome, Guest</h4>
+            }
+        </div>
+    </div>
+
+    @if (Session["UserPreferencesSet"] != null && (bool)Session["UserPreferencesSet"])
+    {
+        <h3 class="text-center mb-4" style="color: orangered;">
+            Preferred Matches
+        </h3>
+        <h6 class="text-center" style="color: #343a40; font-size: 1rem;margin-top:-20px;">(Based On Your Preferences)</h6>
+
+        if (Model != null && Model.Any(p => p.IsPreferred))
+        {
+            <div class="row row-cols-1 row-cols-md-5 g-4">
+                @foreach (var profile in Model.Where(p => p.IsPreferred))
+                {
+                    <div class="col">
+                        <div class="card shadow-lg rounded-3 preferred-profile">
+                            @if (profile.ProfileImage != null)
+                            {
+                                <img src="data:image/jpeg;base64,@Convert.ToBase64String(profile.ProfileImage)" class="card-img-top" alt="Profile Image" />
+                            }
+                            else
+                            {
+                                <div class="card-img-top no-image">
+                                    <span>No Image</span>
+                                </div>
+                            }
+
+                            <div class="card-body">
+                                <h5 class="card-title text-uppercase font-weight-bold">@profile.FirstName @profile.LastName</h5>
+                                <p class="card-text text-muted">
+                                    <strong>Occupation:</strong> @profile.Occupation<br />
+                                    <strong>Height:</strong> @profile.Height<br />
+                                </p>
+                                <a href="@Url.Action("FullDetails", "Home", new { id = profile.Id })" class="btn btn-primary btn-sm">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="text-center text-muted">
+                <p>No preferred matches found.</p>
+            </div>
+        }
+
+        <h3 class="text-center mb-4" style="color: #343a40;margin-top:20px;">
+            Other Matches
+        </h3>
+        <div class="row row-cols-1 row-cols-md-5 g-4">
+            @foreach (var profile in Model.Where(p => !p.IsPreferred))
+            {
+                <div class="col">
+                    <div class="card shadow-lg rounded-3">
+                        @if (profile.ProfileImage != null)
+                        {
+                            <img src="data:image/jpeg;base64,@Convert.ToBase64String(profile.ProfileImage)" class="card-img-top" alt="Profile Image" />
+                        }
+                        else
+                        {
+                            <div class="card-img-top no-image">
+                                <span>No Image</span>
+                            </div>
+                        }
+
+                        <div class="card-body">
+                            <h5 class="card-title text-uppercase font-weight-bold">@profile.FirstName @profile.LastName</h5>
+                            <p class="card-text text-muted">
+                                <strong>Occupation:</strong> @profile.Occupation<br />
+                                <strong>Height:</strong> @profile.Height<br />
+                            </p>
+                            <a href="@Url.Action("FullDetails", "Home", new { id = profile.Id })" class="btn btn-primary btn-sm">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <h3 class="text-center mb-4">
+            All Matches
+        </h3>
+
+        <div class="row row-cols-1 row-cols-md-5 g-4">
+            @foreach (var profile in Model)
+            {
+                <div class="col">
+                    <div class="card shadow-lg rounded-3">
+                        @if (profile.ProfileImage != null)
+                        {
+                            <img src="data:image/jpeg;base64,@Convert.ToBase64String(profile.ProfileImage)" class="card-img-top" alt="Profile Image" />
+                        }
+                        else
+                        {
+                            <div class="card-img-top no-image">
+                                <span>No Image</span>
+                            </div>
+                        }
+
+                        <div class="card-body">
+                            <h5 class="card-title text-uppercase font-weight-bold">@profile.FirstName @profile.LastName</h5>
+                            <p class="card-text text-muted">
+                                <strong>Occupation:</strong> @profile.Occupation<br />
+                                <strong>Height:</strong> @profile.Height<br />
+                            </p>
+                            <a href="@Url.Action("FullDetails", "Home", new { id = profile.Id })" class="btn btn-primary btn-sm">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+</div>
+
+<style>
+    .card-img-top {
+        object-fit: cover;
+        height: 150px;
+        width: 100%;
+    }
+
+    .no-image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 150px;
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        color: #888;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .card {
+        margin: 20px;
+    }
+
+    .user-info {
+        position: absolute;
+        top: 110px;
+        right: 10px;
+        font-family: 'Roboto', sans-serif;
+        font-size: 18px;
+        font-weight: normal;
+        color: #333;
+        background-color: rgba(255, 255, 255, 0.7);
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+
+    .container {
+        max-width: 100%;
+    }
+
+    .card {
+        border: none;
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        width: 90%;
+        margin-left: 20px;
+    }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 18px rgba(0, 0, 0, 0.15);
+        }
+
+    .card-img-top {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 10px 10px 0 0;
+    }
+
+    .card-body {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 0 0 10px 10px;
+    }
+
+    .card-title {
+        font-size: 1.2rem;
+        color: #333;
+        font-weight: bold;
+    }
+
+    .card-text {
+        font-size: 0.9rem;
+        color: #555;
+        line-height: 1.5;
+    }
+
+    .btn-primary {
+        background-color: orangered;
+        border: none;
+        padding: 8px 12px;
+        font-weight: 600;
+    }
+
+        .btn-primary:hover {
+            background-color: orangered;
+            border: none;
+        }
+
+    .row-cols-md-3 {
+        margin-bottom: 30px;
+    }
+
+    h2 {
+        color: #343a40;
+        font-size: 2rem;
+        font-weight: bold;
+    }
+
+    .card-img-top {
+        transition: transform 0.3s ease;
+    }
+
+        .card-img-top:hover {
+            transform: scale(1.1);
+        }
+</style>

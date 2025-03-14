@@ -1,0 +1,464 @@
+﻿@model List<Matrimony.Models.Contact>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Users</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .table thead th {
+            background-color: black;
+            color: #fff;
+            padding: 17px 12px;
+        }
+
+        .table td, .table th {
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #f2f2f2;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: #e9ecef;
+        }
+
+        .table-responsive {
+            margin-top: -30px;
+        }
+
+        .container {
+            max-width: 1200px;
+        }
+
+        .btn {
+            border: none;
+        }
+
+        .btn-info {
+            background-color: orangered;
+            color: white;
+        }
+
+            .btn-info:hover {
+                background-color: orangered;
+                color: white;
+            }
+
+        .btn-edit, .btn-delete {
+            font-size: 18px;
+            padding: 6px 9px;
+            margin: 5px;
+            display: inline-block;
+        }
+
+        .btn-edit {
+            background-color: dimgray;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+            .btn-edit:hover {
+                background-color: dimgray;
+                color: white;
+            }
+
+        .btn-delete {
+            background-color: red;
+            color: white;
+        }
+
+            .btn-delete:hover {
+                background-color: red;
+                color: white;
+            }
+
+        .modal-dialog {
+            max-width: 600px;
+        }
+
+        .modal-content {
+            padding: 20px;
+            margin-top: 200px;
+        }
+
+        .search-container {
+            margin: 20px 0;
+            text-align: right;
+        }
+
+        .search-box {
+            width: 500px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+
+        .pagination {
+            justify-content: center;
+            padding: 15px 0;
+        }
+
+            .pagination .page-item.active .page-link {
+                background-color: orangered;
+                border-color: orangered;
+                color: white;
+            }
+
+            .pagination .page-item .page-link {
+                color: black;
+            }
+
+                .pagination .page-item .page-link:hover {
+                    background-color: #f1f1f1;
+                }
+
+        .highlight {
+            background-color: yellow;
+        }
+
+        .back-btn {
+            background-color: orangered;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 20px;
+            transition: background-color 0.3s ease;
+            margin-right:595px;
+        }
+
+            .back-btn:hover {
+                background-color: orangered;
+            }
+        .view {
+            text-decoration: none;
+            color: orangered;
+            cursor: pointer;
+        }
+            .view:hover {
+                text-decoration: none;
+                color: orangered;
+                cursor: pointer;
+            }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="text-center mb-5">Contact Messages</h1>
+
+        <div class="search-container">
+            <button class="back-btn" onclick="goBack()">Back</button>
+            <input type="text" id="searchInput" class="search-box" placeholder="Search users..." onkeyup="searchUsers()" />
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Message</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Resolution</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="userTableBody">
+
+                    @foreach (var contact in Model)
+                     {
+                        <tr>
+                            <th scope="row">@contact.Id</th>
+                            <td>@contact.Name</td>
+                            <td>@contact.Email</td>
+                            <td><a href="#" class="view" data-bs-toggle="modal" data-bs-target="#viewMessageModal" data-message="@contact.Message">
+                                    View
+                                </a></td>
+                            <td>@contact.CreatedAt</td>
+                            <td>
+                                @if (contact.Resolution != "Not Yet")
+                                {
+                                    <a href="#" class="view" data-bs-toggle="modal" data-bs-target="#viewResolutionModal" data-resolution="@contact.Resolution">
+                                        View
+                                    </a>
+                                }
+                                else
+                                {
+                                    @contact.Resolution
+                                }
+                            </td>
+                            <td>
+                                <div class="d-flex justify-content-center align-items-center">
+                                    @if (contact.Status == "Pending")
+                                    {
+                                        <button class="btn-edit" data-bs-toggle="modal" data-bs-target="#updateStatusModal"
+                                                data-id="@contact.Id" data-name="@contact.Name" data-email="@contact.Email">
+                                            <i class="fa fa-clock"></i>
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <span class="btn-edit"><i class="fa fa-check"></i></span>
+                                    }
+                                    <a href="@Url.Action("DeleteMessage", "Admin", new { Id = contact.Id })" class="btn btn-delete btn-sm"
+                                       onclick="return confirm('Are you sure you want to delete this Message?');">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <nav>
+            <ul class="pagination" id="paginationControls">
+            </ul>
+        </nav>
+    </div>
+
+    <div class="modal fade" id="updateStatusModal" tabindex="-1" aria-labelledby="updateStatusModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateStatusModalLabel">Update Message Status</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="@Url.Action("UpdateStatus", "Admin")">
+                        <input type="hidden" name="Id" id="MessageId" />
+                        <div class="mb-3">
+                            <label for="Resolution" class="form-label">Resolution</label>
+                            <textarea class="form-control" id="Resolution" name="Resolution" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-info">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal to View Resolution -->
+    <div class="modal fade" id="viewResolutionModal" tabindex="-1" aria-labelledby="viewResolutionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewResolutionModalLabel">Resolution</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="ResolutionText"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal to View Message -->
+    <div class="modal fade" id="viewMessageModal" tabindex="-1" aria-labelledby="viewMessageModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewMessageModalLabel">Message</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="MessageText"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+
+        // Status Modal
+        var updateStatusModal = document.getElementById('updateStatusModal');
+        updateStatusModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var id = button.getAttribute('data-id');
+            var name = button.getAttribute('data-name');
+            var email = button.getAttribute('data-email');
+
+            var modalTitle = updateStatusModal.querySelector('.modal-title');
+            var messageIdInput = updateStatusModal.querySelector('#MessageId');
+            var resolutionTextarea = updateStatusModal.querySelector('#Resolution');
+
+            modalTitle.textContent = 'Update Status for Message from ' + name;
+            messageIdInput.value = id;
+            resolutionTextarea.value = '';
+        });
+
+        // Pagination Modal
+        const rowsPerPage = 5;
+        let currentPage = 1;
+        let originalRows = [];
+        let filteredRows = [];
+        const userTableBody = document.getElementById("userTableBody");
+        const searchInput = document.getElementById("searchInput");
+
+        function loadTableData(rows) {
+            userTableBody.innerHTML = '';
+            rows.forEach(row => {
+                userTableBody.appendChild(row);
+            });
+            createPagination(rows.length);
+        }
+
+        function createPagination(totalRows) {
+            const totalPages = Math.ceil(totalRows / rowsPerPage);
+            const paginationControls = document.getElementById("paginationControls");
+            paginationControls.innerHTML = '';
+
+            for (let i = 1; i <= totalPages; i++) {
+                const pageItem = document.createElement("li");
+                pageItem.classList.add("page-item");
+                if (i === currentPage) pageItem.classList.add("active");
+                const pageLink = document.createElement("a");
+                pageLink.classList.add("page-link");
+                pageLink.href = "#";
+                pageLink.innerHTML = i;
+                pageItem.appendChild(pageLink);
+                pageLink.onclick = () => goToPage(i);
+                paginationControls.appendChild(pageItem);
+            }
+
+            if (totalPages > 5) {
+                const ellipsisItem = document.createElement("li");
+                ellipsisItem.classList.add("page-item");
+                const ellipsisLink = document.createElement("a");
+                ellipsisLink.classList.add("page-link");
+                ellipsisLink.href = "#";
+                ellipsisLink.innerHTML = "...";
+                ellipsisItem.appendChild(ellipsisLink);
+                paginationControls.appendChild(ellipsisItem);
+            }
+
+            if (currentPage > 1) {
+                const prevPageItem = document.createElement("li");
+                prevPageItem.classList.add("page-item");
+                const prevPageLink = document.createElement("a");
+                prevPageLink.classList.add("page-link");
+                prevPageLink.href = "#";
+                prevPageLink.innerHTML = "Previous";
+                prevPageLink.onclick = () => goToPage(currentPage - 1);
+                paginationControls.prepend(prevPageItem);
+                prevPageItem.appendChild(prevPageLink);
+            }
+
+            const nextPageItem = document.createElement("li");
+            nextPageItem.classList.add("page-item");
+            const nextPageLink = document.createElement("a");
+            nextPageLink.classList.add("page-link");
+            nextPageLink.href = "#";
+            nextPageLink.innerHTML = "Next";
+            nextPageLink.onclick = () => goToPage(currentPage + 1);
+            paginationControls.appendChild(nextPageItem);
+            nextPageItem.appendChild(nextPageLink);
+        }
+
+        function goToPage(page) {
+            const totalRows = filteredRows.length;
+            const totalPages = Math.ceil(totalRows / rowsPerPage);
+            if (page < 1 || page > totalPages) return;
+            currentPage = page;
+            displayPageRows();
+            createPagination(totalRows);
+        }
+
+        function displayPageRows() {
+            const start = (currentPage - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+            const currentRows = filteredRows.slice(start, end);
+            loadTableData(currentRows);
+        }
+
+        // Search Modal
+        function searchUsers() {
+            let filter = searchInput.value.toLowerCase();
+            filteredRows = Array.from(originalRows);
+
+            if (filter) {
+                filteredRows = filteredRows.filter(row => {
+                    let matchFound = false;
+                    row.querySelectorAll('td').forEach(cell => {
+                        let cellText = cell.textContent.toLowerCase();
+                        if (cellText.includes(filter)) {
+                            matchFound = true;
+
+                            let regExp = new RegExp(filter, 'gi');
+                            cell.innerHTML = cellText.replace(regExp, match => `<span class="highlight">${match}</span>`);
+                        }
+                    });
+                    return matchFound;
+                });
+            } else {
+                filteredRows.forEach(row => {
+                    row.querySelectorAll('.highlight').forEach(span => {
+                        span.classList.remove('highlight');
+                    });
+                });
+            }
+
+            currentPage = 1;
+            displayPageRows();
+        }
+
+        window.onload = () => {
+            originalRows = Array.from(userTableBody.rows);
+            filteredRows = originalRows;
+            displayPageRows();
+        };
+
+        function goBack() {
+            window.history.back();
+        }
+
+
+
+        // Resolution modal
+        var viewResolutionModal = document.getElementById('viewResolutionModal');
+        viewResolutionModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget; 
+            var resolution = button.getAttribute('data-resolution');
+
+            var resolutionText = viewResolutionModal.querySelector('#ResolutionText');
+            resolutionText.textContent = resolution; 
+        });
+
+        // Message modal
+        var viewMessageModal = document.getElementById('viewMessageModal');
+        viewMessageModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget; 
+            var message = button.getAttribute('data-message'); 
+
+            var messageText = viewMessageModal.querySelector('#MessageText');
+            messageText.textContent = message; 
+        });
+
+    </script>
+</body>
+</html>

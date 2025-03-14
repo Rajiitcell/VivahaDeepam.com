@@ -1,0 +1,259 @@
+﻿@model Matrimony.Models.Profile
+
+@{
+    ViewBag.Title = "Edit Users";
+}
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container">
+    <h2 class="page-title">Edit Users</h2>
+
+    @using (Html.BeginForm("EditUsersForm", "Admin", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-container">
+
+            @Html.Hidden("returnList", Request.QueryString["returnList"])
+
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="form-row">
+                <div class="form-group col-6">
+                    @Html.LabelFor(model => model.FirstName, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", value = Model.FirstName ?? "" })
+                </div>
+
+                <div class="form-group col-6">
+                    @Html.LabelFor(model => model.LastName, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", value = Model.LastName ?? "" })
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-6">
+                    @Html.LabelFor(model => model.Email, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control", value = Model.Email ?? "" })
+                </div>
+
+                <div class="form-group col-6">
+                    @Html.LabelFor(model => model.PhoneNumber, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control", value = Model.PhoneNumber ?? "" })
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-6">
+                    @Html.LabelFor(model => model.Gender, new { @class = "form-label" })
+                    @Html.DropDownListFor(model => model.Gender,
+                        new SelectList(new List<string> { "Male", "Female", "Other" }, Model.Gender),
+                        "-- Select Gender --",
+                        new { @class = "form-control dropdown-field" })
+                </div>
+
+                <div class="form-group col-6">
+                    @Html.LabelFor(model => model.Location, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Location, new { @class = "form-control", value = Model.Location ?? "" })
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-6">
+                    @Html.LabelFor(model => model.Occupation, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Occupation, new { @class = "form-control", value = Model.Occupation ?? "" })
+                </div>
+
+                <div class="form-group col-6">
+                    @Html.LabelFor(model => model.MaritalStatus, new { @class = "form-label" })
+                    @Html.DropDownListFor(model => model.MaritalStatus,
+                        new SelectList(new List<string> { "Single", "Married", "Divorced", "Widowed" }, Model.MaritalStatus),
+                        "-- Select Marital Status --",
+                        new { @class = "form-control dropdown-field" })
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-6">
+                    @Html.LabelFor(model => model.Status, new { @class = "form-label" })
+                    @Html.DropDownListFor(model => model.Status,
+                        new SelectList(new List<string> { "Searching", "Marriage Fixed", "Marriage Completed" }, Model.Status),
+                        "- Select Status -",
+                        new { @class = "form-control dropdown-field" })
+                </div>
+                <div class="form-group col-6">
+                    @Html.LabelFor(model => model.IsEnable, new { @class = "form-label" })
+                    @Html.DropDownListFor(model => model.IsEnable,
+                        new SelectList(new List<string> { "Enable", "Disable" }, Model.IsEnable),
+                        "- Select Status -",
+                        new { @class = "form-control dropdown-field" })
+                </div>
+            </div>
+
+
+            @if (ViewBag.ErrorMessage != null)
+            {
+                <div class="alert alert-danger">
+                    @ViewBag.ErrorMessage
+                </div>
+            }
+
+            <div class="btn-container">
+                <a href="javascript:window.history.back();" class="btn btn-secondary">Back</a>
+                <button type="submit" class="btn btn-submit">Submit</button>
+            </div>
+        </div>
+     }
+</div>
+
+<style>
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f7fa;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 100%;
+    }
+
+    .page-title {
+        text-align: center;
+        font-size: 2.5em;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .form-container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        margin: 0 auto;
+        margin-top: 30px;
+    }
+
+    .form-row {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+        flex: 1;
+        padding-right: 15px;
+    }
+
+    .col-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #555;
+        font-size: 1.1em;
+        margin-bottom: 8px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 1em;
+        color: #333;
+        background-color: #f9f9f9;
+    }
+
+    .form-control:focus {
+        border-color: #007bff;
+        background-color: #fff;
+        outline: none;
+    }
+
+    .dropdown-field {
+        width: 100%; /* Ensures the dropdown takes full width */
+        padding: 0.5rem;
+        font-size: 1rem;
+    }
+
+    .btn-submit {
+        width: 20%;
+        padding:7px;
+        background-color: orangered;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1em;
+        font-weight: 400;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-submit:hover {
+        background-color: orangered;
+        color: white;
+    }
+    .btn-container {
+        display: flex;
+        gap:50px; 
+        justify-content: flex-start;
+        margin-left:260px;
+    }
+    .form-control[type="file"] {
+        border: 1px solid #ccc;
+        background-color: #fff;
+        padding: 12px;
+    }
+    .btn-secondary {
+        background-color: #5a6268;
+        color: white;
+        width: 20%;
+        border-radius: 8px;
+        font-size: 1.1em;
+        font-weight:400;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+   
+    media (max-width: 768px) {
+        .form-container {
+            padding: 15px;
+            margin: 10px;
+        }
+
+        .page-title {
+            font-size: 2em;
+        }
+
+        .col-6 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        .form-control {
+            font-size: 0.95em;
+        }
+
+        .btn-submit {
+            font-size: 1em;
+        }
+    .btn-container {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+    }
+</style>

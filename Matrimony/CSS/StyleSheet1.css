@@ -1,0 +1,16 @@
+﻿.notification-buttons {
+    position: relative;
+}
+
+    .notification-buttons button {
+        position: absolute;
+        right: 20px; /* Adjust this value to align with the table column */
+        transform: translateY(-50%); /* Center vertically */
+    }
+
+/* Adjust the top position for each button */
+@for (var i = 0; i < Model.Count; i++) {
+    .notification-buttons button:nth-child(@(i + 1)) {
+        top: @((i * 40) + 20)px; /* Adjust based on row height */
+    }
+}

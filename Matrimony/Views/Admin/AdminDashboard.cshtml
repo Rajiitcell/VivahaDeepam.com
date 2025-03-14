@@ -1,0 +1,456 @@
+﻿@{
+    ViewBag.Title = "Admin Dashboard";
+}
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+<link href="~/Content/css/admin-style.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="mb-4 text-center text-uppercase">Admin Dashboard</h2>
+
+            <div class="row mb-4">
+                <!-- Total Users Card -->
+                <div class="col-md-4 col-xl-4 mb-4">
+                    <a href="/admin/AllUsers" class="card-link">
+                        <div class="card mb-3 widget-content bg-midnight-bloom">
+                            <div class="widget-content-wrapper text-white">
+                                <div class="widget-content-left">
+                                    <i class="fa fa-users fa-2x"></i>
+                                    <div class="widget-heading">Total Users</div>
+                                    <div class="widget-subheading">Total number of users</div>
+                                </div>
+                                <div class="widget-content-right">
+                                    <div class="widget-numbers text-white">
+                                        <span id="total-users-count">@Model.TotalUsers</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Pending Requests Card -->
+                <div class="col-md-4 col-xl-4 mb-4">
+                    <a href="/admin/PendingRequests" class="card-link">
+                        <div class="card mb-3 widget-content bg-grow-early">
+                            <div class="widget-content-wrapper text-white">
+                                <div class="widget-content-left">
+                                    <i class="fa fa-clock fa-2x"></i>
+                                    <div class="widget-heading">Pending Requests</div>
+                                    <div class="widget-subheading">Requests waiting to be processed</div>
+                                </div>
+                                <div class="widget-content-right">
+                                    <div class="widget-numbers text-white">
+                                        <span id="pending-requests-count">@Model.PendingRequests</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Recently Viewed Card -->
+                <div class="col-md-4 col-xl-4 mb-4">
+                    <a href="/admin/RecentlyViewed" class="card-link">
+                        <div class="card mb-3 widget-content bg-danger">
+                            <div class="widget-content-wrapper text-white">
+                                <div class="widget-content-left">
+                                    <i class="fa fa-eye fa-2x"></i>
+                                    <div class="widget-heading">Recently Viewed</div>
+                                    <div class="widget-subheading">Profiles recently viewed (Last 7 Days)</div>
+                                </div>
+                                <div class="widget-content-right">
+                                    <div class="widget-numbers text-white">
+                                        <span id="recently-viewed-count">@Model.RecentlyViewed</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <!-- Canceled Profiles Card -->
+                <div class="col-md-4 col-xl-4 mb-4">
+                    <a href="/admin/AllCanceledProfiles" class="card-link">
+                        <div class="card mb-3 widget-content bg-secondary">
+                            <div class="widget-content-wrapper text-white">
+                                <div class="widget-content-left">
+                                    <i class="fa fa-ban fa-2x"></i>
+                                    <div class="widget-heading">Canceled Profiles</div>
+                                    <div class="widget-subheading">Profiles that were canceled</div>
+                                </div>
+                                <div class="widget-content-right">
+                                    <div class="widget-numbers text-white">
+                                        <span id="canceled-profiles-count">@Model.CanceledProfiles</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="row mb-4">
+
+                <div class="col-md-6">
+                    <div class="users-by-gender-container">
+                        <canvas id="usersByGenderChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="interests-by-status-container">
+                        <canvas id="interestsByStatusChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+
+    var ctx1 = document.getElementById('usersByGenderChart').getContext('2d');
+    var usersByGenderChart = new Chart(ctx1, {
+        type: 'doughnut',
+        data: {
+            labels: ['Male', 'Female'],
+            datasets: [{
+                label: 'Users by Gender',
+                data: [@Model.MaleUsers, @Model.FemaleUsers],
+                backgroundColor: ['Gray', 'OrangeRed'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            cutoutPercentage: 60,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        font: {
+                            size: 14
+                        }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return tooltipItem.label + ': ' + tooltipItem.raw;
+                        }
+                    }
+                }
+            },
+            animation: {
+                animateScale: true,
+                animateRotate: true
+            }
+        }
+    });
+
+
+    var ctx2 = document.getElementById('interestsByStatusChart').getContext('2d');
+    var interestsByStatusChart = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Pending', 'Accepted', 'Rejected'],
+            datasets: [{
+                label: 'Interests by Status',
+                data: [@Model.PendingInterests, @Model.AcceptedInterests, @Model.RejectedInterests],
+                backgroundColor: [
+                    'rgba(255, 203, 5, 0.7)',
+                    'rgba(46, 204, 113, 0.7)',
+                    'rgba(231, 76, 60, 0.7)'
+                ],
+                borderColor: [
+                    'rgba(255, 203, 5, 1)',
+                    'rgba(46, 204, 113, 1)',
+                    'rgba(231, 76, 60, 1)'
+                ],
+                borderWidth: 1,
+                hoverBackgroundColor: [
+                    'rgba(255, 203, 5, 1)',
+                    'rgba(46, 204, 113, 1)',
+                    'rgba(231, 76, 60, 1)'
+                ],
+                borderRadius: 8,
+                barThickness: 40,
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        font: {
+                            size: 16,
+                            family: 'Poppins, sans-serif',
+                            weight: 'bold'
+                        },
+                        padding: 20
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                    titleFont: {
+                        weight: 'bold',
+                        size: 14,
+                    },
+                    bodyFont: {
+                        weight: 'normal',
+                        size: 12,
+                    },
+                    cornerRadius: 6,
+                    padding: 10
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        font: {
+                            size: 14,
+                            weight: 'bold',
+                            family: 'Poppins, sans-serif',
+                        },
+                        color: '#7f8c8d',
+                    }
+                },
+                y: {
+                    grid: {
+                        display: true,
+                        color: '#ecf0f1',
+                        lineWidth: 1
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                        font: {
+                            size: 14,
+                            weight: 'bold',
+                            family: 'Poppins, sans-serif',
+                        },
+                        color: '#7f8c8d'
+                    }
+                }
+            },
+            animation: {
+                duration: 1000,
+                easing: 'easeInOutQuad',
+            },
+            layout: {
+                padding: {
+                    left: 10,
+                    right: 10,
+                    top: 20,
+                    bottom: 20
+                }
+            },
+            aspectRatio: 1.5,
+            maintainAspectRatio: false
+        }
+    });
+
+</script>
+
+<style>
+    body {
+        background-color: #f8f9fc;
+        font-family: 'Arial', sans-serif;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    h2 {
+        font-family: 'Roboto', sans-serif;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-align: center;
+    }
+    .widget-content-left i {
+        font-size: 1.5rem;
+        vertical-align: middle;
+        margin-left:50px;
+    }
+    .card {
+        width: 100%;
+        min-height: 80px;
+        height: auto;
+        border-radius: 3px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: none;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        overflow: hidden;
+        margin-left: 20px;
+    }
+
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        flex: 1;
+        position: relative;
+        text-align: center;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .widget-content {
+        background-color: #2d3436;
+        height: 100%;
+        border-radius: 4px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .widget-heading {
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        word-wrap: break-word;
+        white-space: normal;
+        margin-top:-25px;
+    }
+
+    .widget-subheading {
+        font-size: 14px;
+        text-align: center;
+        font-weight: normal;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .widget-numbers {
+        font-size: 24px;
+        font-weight: bold;
+        line-height: 1.2;
+    }
+
+    .bg-midnight-bloom {
+        background-color: #1f3a68 !important;
+    }
+
+    .bg-grow-early {
+        background-color: #e74c3c !important;
+    }
+
+    .bg-danger {
+        background-color: #1ABC9C !important;
+    }
+
+    .bg-secondary {
+        background-color: #7f8c8d !important;
+    }
+
+    .widget-heading,
+    .widget-subheading,
+    .widget-numbers {
+        color: white;
+        text-align: center;
+        overflow-wrap: break-word;
+    }
+
+    .widget-numbers {
+        font-size: 24px;
+        font-weight: bold;
+        line-height: 1.2;
+    }
+
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+    }
+
+        .card-body h4 {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .card-body p {
+            font-size: 16px;
+        }
+
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .users-by-gender-container {
+        position: relative;
+        height: auto;
+        width: 50%;
+        margin-bottom: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        padding: 15px;
+        margin-top: -25px;
+        margin-left:20px;
+    }
+
+        .users-by-gender-container canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+    media (max-width: 768px) {
+        .users-by-gender-container
+
+    {
+        height: 180px;
+    }
+
+    }
+
+    .interests-by-status-container {
+        position: relative;
+        height: auto;
+        width: 100%;
+        margin-bottom: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        padding: 10px;
+        margin-top: -82px;
+        margin-left: 20px;
+    }
+
+        .interests-by-status-container canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+    media (max-width: 768px) {
+        .interests-by-status-container
+
+    {
+        height: 180px;
+    }
+    }
+</style>
+

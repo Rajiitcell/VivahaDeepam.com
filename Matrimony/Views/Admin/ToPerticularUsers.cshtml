@@ -1,0 +1,452 @@
+﻿@model List<Matrimony.Models.Announcements>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Users</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/CSS/StyleSheet1.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .table thead th {
+            background-color: black;
+            color: #fff;
+            padding: 17px 12px;
+        }
+
+        .table td, .table th {
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #f2f2f2;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: #e9ecef;
+        }
+
+        .table-responsive {
+            margin-top: -30px;
+        }
+
+        .container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .btn {
+            border: none;
+        }
+
+        .btn-info {
+            background-color: orangered;
+            color: white;
+        }
+
+            .btn-info:hover {
+                background-color: orangered;
+                color: white;
+            }
+
+        .btn-edit, .btn-delete {
+            font-size: 18px;
+            padding: 6px 9px;
+            margin: 5px;
+        }
+
+        .btn-edit {
+            background-color: orangered;
+            color: white;
+        }
+
+            .btn-edit:hover {
+                background-color: orangered;
+                color: white;
+            }
+
+        .btn-delete {
+            background-color: red;
+            color: white;
+        }
+
+            .btn-delete:hover {
+                background-color: red;
+                color: white;
+            }
+
+        .search-container {
+            margin: 20px 0;
+            text-align: right;
+        }
+
+        .search-box {
+            width: 500px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+
+        .pagination {
+            justify-content: center;
+            padding: 15px 0;
+        }
+
+            .pagination .page-item.active .page-link {
+                background-color: orangered;
+                border-color: orangered;
+                color: white;
+            }
+
+            .pagination .page-item .page-link {
+                color: black;
+            }
+
+                .pagination .page-item .page-link:hover {
+                    background-color: #f1f1f1;
+                }
+
+        .highlight {
+            background-color: yellow;
+        }
+
+        .back-btn {
+            background-color: orangered;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 20px;
+            transition: background-color 0.3s ease;
+            margin-right: 715px;
+        }
+
+            .back-btn:hover {
+                background-color: orangered;
+            }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 120px auto 0; 
+            padding: 20px;
+            border: 1px solid #888;
+            width: 35%;
+            border-radius: 10px;
+            position: relative;
+            top: 50px;
+        }
+
+        .close {
+            color: black;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            margin-left:520px;
+        }
+
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+        .btn-primary{
+            color:white;
+            background-color:orangered;
+            margin-left:250px;
+        }
+        .btn-primary:hover{
+            background-color:orangered;
+            border:none;
+            color:white;
+        }
+            .btn-primary:focus,
+            .btn-primary:active {
+                outline: none;
+                border: none;
+            }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="text-center mb-5">All Users</h1>
+
+        <div class="search-container">
+            <button class="back-btn" onclick="goBack()">Back</button>
+            <input type="text" id="searchInput" class="search-box" placeholder="Search users..." onkeyup="searchUsers()" />
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped table-hover" id="usersTable">
+                <thead>
+                    <tr>
+                        <th scope="col">UserId</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Occupation</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Marital Status</th>
+                        <th scope="col">Notification</th>
+                    </tr>
+                </thead>
+                <tbody id="userTableBody">
+                    @foreach (var announcement in Model)
+                     {
+                        <tr onclick="handleRowClick(@announcement.Id)">
+                            <th scope="row">@announcement.Id</th>
+                            <td>@announcement.FirstName</td>
+                            <td>@announcement.LastName</td>
+                            <td>@announcement.Email</td>
+                            <td>@announcement.PhoneNumber</td>
+                            <td>@announcement.Gender</td>
+                            <td>@announcement.Occupation</td>
+                            <td>@announcement.Location</td>
+                            <td>@announcement.MaritalStatus</td>
+                            <td>
+                                <button class="btn btn-edit btn-sm" onclick="openNotificationModal(@announcement.Id); event.stopPropagation();">
+                                    <i class="fas fa-bullhorn"></i>
+                                </button>
+                            </td>
+                        </tr>
+                     }
+                </tbody>
+            </table>
+        </div>
+
+        <nav>
+            <ul class="pagination" id="paginationControls">
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Notification Modal -->
+    <div id="notificationModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeNotificationModal()">&times;</span>
+            <h2>Send Notification</h2>
+            <form id="notificationForm">
+                <input type="hidden" id="userId" name="userId" />
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" class="form-control" id="subject" name="subject" required />
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const rowsPerPage = 5;
+        let currentPage = 1;
+        let originalRows = [];
+        let filteredRows = [];
+        const userTableBody = document.getElementById("userTableBody");
+        const searchInput = document.getElementById("searchInput");
+
+        function loadTableData(rows) {
+            userTableBody.innerHTML = '';
+            rows.forEach(row => {
+                userTableBody.appendChild(row);
+            });
+            createPagination(rows.length);
+        }
+
+        function createPagination(totalRows) {
+            const totalPages = Math.ceil(totalRows / rowsPerPage);
+            const paginationControls = document.getElementById("paginationControls");
+            paginationControls.innerHTML = '';
+
+            for (let i = 1; i <= totalPages; i++) {
+                const pageItem = document.createElement("li");
+                pageItem.classList.add("page-item");
+                if (i === currentPage) pageItem.classList.add("active");
+                const pageLink = document.createElement("a");
+                pageLink.classList.add("page-link");
+                pageLink.href = "#";
+                pageLink.innerHTML = i;
+                pageItem.appendChild(pageLink);
+                pageLink.onclick = () => goToPage(i);
+                paginationControls.appendChild(pageItem);
+            }
+
+            if (totalPages > 5) {
+                const ellipsisItem = document.createElement("li");
+                ellipsisItem.classList.add("page-item");
+                const ellipsisLink = document.createElement("a");
+                ellipsisLink.classList.add("page-link");
+                ellipsisLink.href = "#";
+                ellipsisLink.innerHTML = "...";
+                ellipsisItem.appendChild(ellipsisLink);
+                paginationControls.appendChild(ellipsisItem);
+            }
+
+            if (currentPage > 1) {
+                const prevPageItem = document.createElement("li");
+                prevPageItem.classList.add("page-item");
+                const prevPageLink = document.createElement("a");
+                prevPageLink.classList.add("page-link");
+                prevPageLink.href = "#";
+                prevPageLink.innerHTML = "Previous";
+                prevPageLink.onclick = () => goToPage(currentPage - 1);
+                paginationControls.prepend(prevPageItem);
+                prevPageItem.appendChild(prevPageLink);
+            }
+
+            const nextPageItem = document.createElement("li");
+            nextPageItem.classList.add("page-item");
+            const nextPageLink = document.createElement("a");
+            nextPageLink.classList.add("page-link");
+            nextPageLink.href = "#";
+            nextPageLink.innerHTML = "Next";
+            nextPageLink.onclick = () => goToPage(currentPage + 1);
+            paginationControls.appendChild(nextPageItem);
+            nextPageItem.appendChild(nextPageLink);
+        }
+
+        function goToPage(page) {
+            const totalRows = filteredRows.length;
+            const totalPages = Math.ceil(totalRows / rowsPerPage);
+            if (page < 1 || page > totalPages) return;
+            currentPage = page;
+            displayPageRows();
+            createPagination(totalRows);
+        }
+
+        function displayPageRows() {
+            const start = (currentPage - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+            const currentRows = filteredRows.slice(start, end);
+            loadTableData(currentRows);
+        }
+
+        function searchUsers() {
+            let filter = searchInput.value.toLowerCase();
+            filteredRows = Array.from(originalRows);
+
+            if (filter) {
+                filteredRows = filteredRows.filter(row => {
+                    let matchFound = false;
+                    row.querySelectorAll('td').forEach(cell => {
+                        let cellText = cell.textContent.toLowerCase();
+                        if (cellText.includes(filter)) {
+                            matchFound = true;
+
+                            let regExp = new RegExp(filter, 'gi');
+                            cell.innerHTML = cellText.replace(regExp, match => `<span class="highlight">${match}</span>`);
+                        }
+                    });
+                    return matchFound;
+                });
+            } else {
+                filteredRows.forEach(row => {
+                    row.querySelectorAll('.highlight').forEach(span => {
+                        span.classList.remove('highlight');
+                    });
+                });
+            }
+
+            currentPage = 1;
+            displayPageRows();
+        }
+
+        window.onload = () => {
+            originalRows = Array.from(userTableBody.rows);
+            filteredRows = originalRows;
+            displayPageRows();
+        };
+
+        function goBack() {
+            window.history.back();
+        }
+
+        // Modal functions
+        function openNotificationModal(userId) {
+            document.getElementById('userId').value = userId;
+            document.getElementById('notificationModal').style.display = 'block';
+        }
+
+        function closeNotificationModal() {
+            document.getElementById('notificationModal').style.display = 'none';
+        }
+
+        document.getElementById('notificationForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const userId = document.getElementById('userId').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+
+            fetch('/Admin/SendNotification', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    UserId: userId,
+                    Subject: subject,
+                    Message: message
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Notification sent successfully!');
+                        closeNotificationModal();
+                        window.location.reload();
+                    } else {
+                        alert('Failed to send notification.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+
+
+        function handleRowClick(userId) {
+            window.location.href = `@Url.Action("Profiles", "Admin")?userId=${userId}`;
+        }
+
+        function openNotificationModal(userId) {
+            document.getElementById('userId').value = userId;
+            document.getElementById('notificationModal').style.display = 'block';
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

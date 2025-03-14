@@ -1,0 +1,215 @@
+﻿@model Matrimony.Models.RegistrationModel
+
+@{
+    ViewBag.Title = "Success Stories - Matrimonial Site";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .top-menu {
+            background-color: #343a40;
+            color: white;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 10;
+        }
+
+            .top-menu h2 {
+                margin: 0;
+                color: white;
+                font-weight: 700;
+            }
+
+            .top-menu .menu-links {
+                display: flex;
+                gap: 15px;
+                margin-left: 700px;
+            }
+
+                .top-menu .menu-links a {
+                    color: #ffd700;
+                    font-weight: 500;
+                    text-decoration: none;
+                    padding: 7px 15px;
+                    border-radius: 5px;
+                    transition: background-color 0.3s, color 0.3s;
+                }
+
+                    .top-menu .menu-links a:hover {
+                        background-color: orangered;
+                        color: white; 
+                    }
+
+            .top-menu .login-link {
+                color: #ffd700;
+                font-weight: 500;
+                text-decoration: none;
+                padding: 7px 15px;
+                border-radius: 5px;
+                transition: background-color 0.3s, color 0.3s;
+            }
+
+                .top-menu .login-link:hover {
+                    background-color: orangered;
+                    color: white;
+                }
+
+        .content-section {
+            padding: 80px 30px;
+            text-align: center;
+            background-color: #fff;
+            margin-top: 80px;
+        }
+
+            .content-section h1 {
+                font-size: 40px;
+                color: #343a40;
+                font-weight: 600;
+                margin-bottom: 20px;
+            }
+
+            .content-section p {
+                font-size: 18px;
+                color: #555;
+                max-width: 800px;
+                margin: 0 auto;
+                line-height: 1.6;
+            }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            background-color: #343a40;
+            color: white;
+        }
+
+        .member-info {
+            margin-right: 40px;
+        }
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 15px; 
+        }
+
+        .card {
+            width: 100%;
+            max-width:450px;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+            background-color: #fff;
+        }
+
+        .card-img-top {
+            width: 100%;
+            height:220px; 
+            object-fit: cover;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .card-body {
+            padding: 12px; 
+        }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .card-text {
+            font-size: 14px; 
+            color: #555;
+            line-height: 1.5;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="top-menu">
+        <h2>Tamil Tech Matrimony</h2>
+
+        <div class="menu-links">
+            <a href="/Home/About">About</a>
+            <a href="/Home/Contact">Contact</a>
+            <a href="/Home/SuccessStories">Success Stories</a>
+        </div>
+
+        <div class="member-info">
+            <span>Not a Member yet?</span>
+            <a href="/Home/Registration" class="login-link">Sign Up</a>
+        </div>
+    </div>
+
+    <div class="content-section">
+        <h1 style="margin-top:-80px;">Success Stories</h1>
+        <p>
+            Here are some heartfelt success stories of couples who met through Tamil Tech Matrimony.
+            These inspiring stories highlight the beautiful connections formed, and we take pride in playing
+            a part in these wonderful journeys of love.
+        </p>
+
+        <div class="card-container">
+            
+            <div class="card">
+                <img src="/Images/SS 1.jpg" class="card-img-top" alt="Rajesh & Priya">
+                <div class="card-body">
+                    <h5 class="card-title">Rajesh & Priya</h5>
+                    <p class="card-text">
+                        "We met through Tamil Tech Matrimony, and it has been an amazing journey ever since.
+                        The platform made it so easy to find someone who shared my values and aspirations.
+                        Today, we are happily married, and we thank Tamil Tech Matrimony for bringing us together!"
+                    </p>
+                </div>
+            </div>
+
+           
+            <div class="card">
+                
+                <img src="/Images/SS Hero.jpg" class="card-img-top" alt="Kumar & Anjali">
+                <div class="card-body">
+                    <h5 class="card-title">Kumar & Anjali</h5>
+                    <p class="card-text">
+                        "I was skeptical at first, but Tamil Tech Matrimony helped me find my perfect match.
+                        The user-friendly interface and personalized search options helped me meet Anjali, who shared similar interests and values.
+                        We are now happily married, and we highly recommend this platform."
+                    </p>
+                </div>
+            </div>
+            
+          
+            <div class="card">
+                <img src="/Images/SS2.jpg" class="card-img-top" alt="Suraj & Shalini">
+                <div class="card-body">
+                    <h5 class="card-title">Suraj & Shalini</h5>
+                    <p class="card-text">
+                        "Thanks to Tamil Tech Matrimony, we found each other! From the very first conversation, we realized how much we had in common.
+                        Today, we are living our dream life together, and we are forever grateful to this wonderful platform."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>   
+</body>
+</html>

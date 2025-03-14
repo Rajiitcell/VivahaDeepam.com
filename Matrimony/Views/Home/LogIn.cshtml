@@ -1,0 +1,241 @@
+﻿@model Matrimony.Models.RegistrationModel
+
+@{
+    ViewBag.Title = "Login - Matrimonial Site";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .top-menu {
+            background-color: #343a40;
+            color: white;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 10;
+        }
+
+            .top-menu h2 {
+                margin: 0;
+                color: white;
+                font-weight: 700;
+            }
+
+            .top-menu a {
+                display: inline-block;
+                padding: 7px 15px;
+                color: #ffd700;
+                text-decoration: none;
+                font-weight: 500;
+                border-radius: 5px;
+                transition: background-color 0.3s, color 0.3s;
+            }
+
+                .top-menu a:hover {
+                    background-color: orangered;
+                    color: white;
+                }
+
+        .hero-section {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+            position: relative;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 50%);
+            grid-template-rows: repeat(2, 50%);
+            width: 100%;
+            height: 100%;
+            gap: 0;
+            overflow: hidden;
+        }
+
+            .image-grid div {
+                width: 100%;
+                height: 100%;
+            }
+
+                .image-grid div img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 40%;
+            transform: translate(-50%, -50%);
+            color: white;
+            text-align: center;
+            z-index: 1;
+        }
+
+            .content h1 {
+                font-size: 50px;
+                font-weight: 700;
+            }
+
+            .content p {
+                font-size: 22px;
+                font-weight: 400;
+                margin-top: 20px;
+            }
+
+        .login-form-container {
+            position: absolute;
+            top: 55%;
+            right: 30px;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 10px;
+            width: 350px;
+            color: white;
+            z-index: 1;
+        }
+
+        .register-form input,
+        .register-form select,
+        .register-form button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .register-form button {
+            background-color: orangered;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+        }
+
+            .register-form button:hover {
+                background-color: coral;
+            }
+
+        .register-form h3 {
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .member-info {
+            margin-right: 40px;
+        }
+
+        .top-menu .menu-links {
+            display: flex;
+            gap: 15px;
+            margin-left: 700px;
+        }
+
+            .top-menu .menu-links a {
+                color: #ffd700;
+                font-weight: 500;
+                text-decoration: none;
+                padding: 7px 15px;
+                border-radius: 5px;
+                transition: background-color 0.3s, color 0.3s;
+            }
+
+                .top-menu .menu-links a:hover {
+                    background-color: orangered;
+                    color: white;
+                }
+    </style>
+</head>
+<body>
+    <div class="top-menu">
+        <h2>Tamil Tech Matrimony</h2>
+        <div class="menu-links">
+            <a href="/Home/About">About</a>
+            <a href="/Home/Contact">Contact</a>
+            <a href="/Home/SuccessStories">Success Stories</a>
+        </div>
+        <div class="member-info">
+            <span>Not a Member yet?</span>
+            <a href="/Home/Registration">Sign Up</a>
+        </div>
+    </div>
+
+    <div class="hero-section">
+        <div class="image-grid">
+            <div><img src="/Images/Christian Pic.jpg" alt="Christian Wedding"></div>
+            <div><img src="/Images/Simrranjit-and-Ridhi.jpg" alt="Sikh Wedding"></div>
+            <div><img src="/Images/Telugu Wedding.jpg" alt=" Hindu Wedding"></div>
+            <div><img src="/Images/muslim.jpg" alt="Muslim Wedding"></div>
+        </div>
+
+        <div class="content">
+            <h1>Welcome Back to Tamil Tech Matrimony</h1>
+            <p>Log in to connect with your perfect match.</p>
+        </div>
+
+        <div class="login-form-container">
+
+            @if (ViewBag.ErrorMessage != null)
+             {
+                <div style="color: red; font-weight: bold; text-align: center;">
+                    @ViewBag.ErrorMessage
+                </div>
+             }
+            <div class="register-form">
+
+                <h3>Login</h3>
+
+                @using (Html.BeginForm("LogIn", "Home", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div>
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email address" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                    <br />
+
+                    <div>
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                    <br />
+
+                    <button type="submit">Login</button>
+                }
+
+                <div style="text-align: center; margin-top: 10px;">
+                    <a href="/Home/ForgotPassword" style="color: #ffd700; text-decoration: none;">Forgot Password?</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+</body>
+</html>

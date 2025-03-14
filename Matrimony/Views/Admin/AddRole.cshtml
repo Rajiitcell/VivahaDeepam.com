@@ -1,0 +1,147 @@
+﻿@model Matrimony.Models.UserRoles
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Matrimonial Site</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+       
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .Role-form {
+            width: 100%;
+            max-width: 600px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .Role-form h3 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 30px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            color: #555;
+            transition: border-color 0.3s;
+        }
+
+        .text-danger {
+            font-size: 12px;
+            color: #e74c3c;
+            margin-top: 5px;
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: orangered;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-left:50px;
+            margin-right:50px;
+        }
+
+            button[type="submit"]:hover {
+                background-color: orangered;
+            }
+            button[type="submit"]:focus,
+            button[type="submit"]:active {
+                outline: none;
+                border: none;
+            }
+
+        media (max-width: 768px) {
+            .Role-form {
+                width: 90%;
+                padding: 20px;
+            }
+        }
+        .back-button {
+            padding: 10px 20px;
+            background-color: dimgray;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-left:50px;
+        }
+
+            .back-button:hover {
+                background-color: dimgray;
+            }
+    </style>
+
+</head>
+<body>
+
+    <div class="Role-form">
+
+        <h3>Add New Role</h3>
+
+        @using (Html.BeginForm("AddRole", "Admin", FormMethod.Post))
+         {
+            @Html.AntiForgeryToken()
+
+            <div>
+                @Html.HiddenFor(m => m.RoleId)
+            </div>
+
+            <div>
+                @Html.TextBoxFor(m => m.RoleName, new { @class = "form-control", placeholder = "Role Name" })
+                @Html.ValidationMessageFor(m => m.RoleName, "", new { @class = "text-danger" })
+            </div>
+            <br />
+            <div>
+                @Html.TextBoxFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </div>
+            <br />
+
+            <button type="button" onclick="window.history.back();" class="back-button">
+                Back
+            </button>
+
+            <button type="submit">Add Role</button>
+         }
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+</body>
+</html>

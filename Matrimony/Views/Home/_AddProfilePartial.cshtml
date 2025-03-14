@@ -1,0 +1,589 @@
+﻿@model Matrimony.Models.Profile
+
+@{
+    ViewBag.Title = "Add Profile";
+}
+
+<div class="container">
+    <h2 class="page-title">Add Profile</h2>
+
+    @using (Html.BeginForm("AddProfile", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "profileForm" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-container">
+
+            <!-- Basic Details Section -->
+            <fieldset>
+
+                <legend>Basic Details</legend>
+
+                <div class="form-row">
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.FirstName, new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", value = Model.FirstName ?? "" })
+                    </div>
+
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.LastName, new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", value = Model.LastName ?? "" })
+                    </div>
+
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.Email, new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", value = Model.Email ?? "" })
+                    </div>
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.PhoneNumber, new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control", value = Model.PhoneNumber ?? "" })
+                    </div>
+
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.Gender, new { @class = "form-label" })
+                        @Html.DropDownListFor(model => model.Gender,
+                            new SelectList(new List<string> { "Male", "Female", "Other" }, Model.Gender),
+                            "-- Select Gender --",
+                            new { @class = "form-control" })
+                    </div>
+
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.DateOfBirth, new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control", value = Model.Height ?? "" })
+                    </div>
+
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.Height, new { @class = "form-label" })
+                        @Html.DropDownListFor(model => model.Height, new SelectList(new[] { "5'0\"", "5'1\"", "5'2\"", "5'3\"", "5'4\"", "5'5\"", "5'6\"", "5'7\"", "5'8\"", "5'9\"", "5'10\"", "5'11\"", "6'0\"" }),
+                        new { @class = "form-control" })
+                    </div>
+
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.Weight, new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.Weight, new { @class = "form-control", value = Model.Location ?? "" })
+                    </div>
+
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.Location, new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.Location, new { @class = "form-control", value = Model.Location ?? "" })
+                    </div>
+
+                </div>
+                <div class="form-row">
+
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.Occupation, new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.Occupation, new { @class = "form-control", value = Model.Occupation ?? "" })
+                    </div>
+
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Address Details</legend>
+                <div class="form-row">
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.Address, new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.Address, new { @class = "form-control" })
+                    </div>
+
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.City, new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.City, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.State, new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.State, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.Country, new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.Country, new { @class = "form-control" })
+                    </div>
+                </div>
+            </fieldset>
+            <!-- Religious & Cultural Section -->
+            <fieldset>
+
+                <legend>Religious & Cultural Details</legend>
+
+                <div class="form-row">
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.Religion, new { @class = "form-label" })
+                        @Html.DropDownListFor(model => model.Religion,
+                            new SelectList(new List<string> { "Hindu", "Muslim", "Christian", "Sikh", "Other" }, Model.Religion),
+                            "-- Select Religion --", new { @class = "form-control" })
+                    </div>
+
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.MotherTongue, new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.MotherTongue, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.Caste, new { @class = "form-label" })
+                        @Html.DropDownListFor(model => model.Caste, new SelectList(new[] { "General", "OBC", "SC", "ST", "Other" }),
+                        new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.SubCaste, new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.SubCaste, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.Gothram, new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.Gothram, new { @class = "form-control" })
+                    </div>
+
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.Star, new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.Star, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.Rasi, new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.Rasi, new { @class = "form-control" })
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Education & Profession Section -->
+            <fieldset>
+                <legend>Education & Profession</legend>
+                <div class="form-row">
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.HighestEducation, new { @class = "form-label" })
+                        @Html.DropDownListFor(model => model.HighestEducation, new SelectList(new[] {
+                            "None",
+                            "Primary School",
+                            "Secondary School",
+                            "High School",
+                            "Undergraduate",
+                            "Graduate",
+                            "Postgraduate",
+                            "Doctorate"
+                        }), new { @class = "form-control" })
+                    </div>
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.EducationDetails, new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.EducationDetails, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.CompanyName, new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.AnnualIncome, new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.AnnualIncome, new { @class = "form-control" })
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Family Details Section -->
+            <fieldset>
+                <legend>Family Details</legend>
+                <div class="form-row">
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.FatherOccupation, new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.FatherOccupation, new { @class = "form-control" })
+                    </div>
+
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.MotherOccupation, new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.MotherOccupation, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.SiblingDetails, new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.SiblingDetails, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.GuardianContact, new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.GuardianContact, new { @class = "form-control" })
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Lifestyle & Preferences Section -->
+            <fieldset>
+                <legend>Lifestyle & Marital</legend>
+                <div class="form-row">
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.Smoking, new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.Smoking, new { @class = "form-control" })
+                    </div>
+
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.Drinking, new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.Drinking, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.Hobbies, new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.Hobbies, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.MaritalStatus, new { @class = "form-label" })
+                        @Html.DropDownListFor(model => model.MaritalStatus,
+                            new SelectList(new List<string> { "Single", "Married", "Divorced", "Widowed" }, Model.MaritalStatus),
+                            "-- Select Marital Status --", new { @class = "form-control" })
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Marital & Physical Preferences Section -->
+            <fieldset>
+
+                <legend>Physical Preferences</legend>
+
+                <div class="form-row">
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.PreferredAgeRange, new { @class = "form-label" })
+                        @Html.DropDownListFor(model => model.PreferredAgeRange, new SelectList(new[] {
+                            "18-25",
+                            "26-30",
+                            "31-35",
+                            "36-40",
+                            "41-45",
+                            "46-50",
+                            "51+"
+                        }), new { @class = "form-control" })
+                    </div>
+
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.LocationPreference, new { @class = "form-label" })
+                        @Html.TextBoxFor(model => model.LocationPreference, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.PreferredHeightRange, new { @class = "form-label" })
+                        @Html.DropDownListFor(model => model.PreferredHeightRange, new SelectList(new[] {
+                            "4'5\"-5'0\"",
+                            "5'1\"-5'5\"",
+                            "5'6\"-5'10\"",
+                            "5'11\"-6'2\"",
+                            "6'3\"+"
+                        }), new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.ReligionPreference, new { @class = "form-label" })
+                        @Html.DropDownListFor(model => model.ReligionPreference, new SelectList(new[] {
+                            "Hindu",
+                            "Muslim",
+                            "Christian",
+                            "Sikh",
+                            "Buddhist",
+                            "Other",
+                            "Any"
+                        }), new { @class = "form-control" })
+                    </div>
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.CastePreference, new { @class = "form-label" })
+                        @Html.DropDownListFor(model => model.CastePreference, new SelectList(new[] {
+                            "General",
+                            "OBC",
+                            "SC",
+                            "ST",
+                            "Other",
+                            "Any"
+                        }), new { @class = "form-control" })
+                    </div>
+
+                    <div class="form-group col-4">
+                        @Html.LabelFor(model => model.EducationPreference, new { @class = "form-label" })
+                        @Html.DropDownListFor(model => model.EducationPreference, new SelectList(new[] {
+                            "None",
+                            "Primary School",
+                            "Secondary School",
+                            "High School",
+                            "Undergraduate",
+                            "Graduate",
+                            "Postgraduate",
+                            "Doctorate",
+                            "Any"
+                        }), new { @class = "form-control" })
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Profile Image Upload -->
+            <fieldset>
+                <legend>Image Section</legend>
+                <div class="form-row">
+                    <div class="form-group col-4" style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
+                        @Html.LabelFor(model => model.ProfileImage, new { @class = "form-label" })
+
+                        <div class="mt-2">
+                            @if (Model.ProfileImage != null && Model.ProfileImage.Length > 0)
+                            {
+                                string imageBase64 = Convert.ToBase64String(Model.ProfileImage);
+                                string imageSrc = string.Format("data:image/jpeg;base64,{0}", imageBase64);
+                                <img src="@imageSrc" alt="Profile Image" style="width: 100px;height:100px; margin-top: 10px;" />
+                            }
+                        </div>
+
+                        <input type="file" id="ProfileImage" class="form-control" onchange="convertToBase64('ProfileImage')" />
+                        <input type="hidden" id="ProfileImageBase64" name="ProfileImageBase64" value="@Model.ProfileImage" />
+                    </div>
+                    <div class="form-group col-4" style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
+                        @Html.LabelFor(model => model.image1, new { @class = "form-label" })
+
+                        <div class="mt-2">
+                            @if (Model.image1 != null && Model.image1.Length > 0)
+                            {
+                                string imageBase64 = Convert.ToBase64String(Model.image1);
+                                string imageSrc = string.Format("data:image/jpeg;base64,{0}", imageBase64);
+                                <img src="@imageSrc" alt="Image 1" style="width: 100px;height:100px; margin-top: 10px;" />
+                            }
+                        </div>
+
+                        <input type="file" id="image1" class="form-control" onchange="convertToBase64('image1')" />
+                        <input type="hidden" id="image1Base64" name="image1Base64" value="@Model.image1" />
+                    </div>
+                    <div class="form-group col-4" style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
+                        @Html.LabelFor(model => model.image2, new { @class = "form-label" })
+
+                        <div class="mt-2">
+                            @if (Model.image2 != null && Model.image2.Length > 0)
+                            {
+                                string imageBase64 = Convert.ToBase64String(Model.image2);
+                                string imageSrc = string.Format("data:image/jpeg;base64,{0}", imageBase64);
+                                <img src="@imageSrc" alt="Image 2" style="width: 100px;height:100px; margin-top: 10px;" />
+                            }
+                        </div>
+                        <input type="file" id="image2" class="form-control" onchange="convertToBase64('image2')" />
+                        <input type="hidden" id="image2Base64" name="image2Base64" value="@Model.image2" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-4" style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
+                        @Html.LabelFor(model => model.image3, new { @class = "form-label" })
+
+                        <div class="mt-2">
+                            @if (Model.image3 != null && Model.image3.Length > 0)
+                            {
+                                string imageBase64 = Convert.ToBase64String(Model.image3);
+                                string imageSrc = string.Format("data:image/jpeg;base64,{0}", imageBase64);
+                                <img src="@imageSrc" alt="Image 3" style="width: 100px;height:100px; margin-top: 10px;" />
+                            }
+                        </div>
+                        <input type="file" id="image3" class="form-control" onchange="convertToBase64('image3')" />
+                        <input type="hidden" id="image3Base64" name="image3Base64" value="@Model.image3" />
+                    </div>
+                        <div class="form-group col-4" style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
+                            @Html.LabelFor(model => model.image4, new { @class = "form-label fw-bold" })
+
+                            <div class="mt-2">
+                                @if (Model.image4 != null && Model.image4.Length > 0)
+                                {
+                                    string imageBase64 = Convert.ToBase64String(Model.image4);
+                                    string imageSrc = string.Format("data:image/jpeg;base64,{0}", imageBase64);
+                                    <img src="@imageSrc" alt="Image 4" class="img-thumbnail rounded shadow-sm" style="width: 100px; height: 100px; object-fit: cover; margin-top: 10px;" />
+                                }
+                            </div>
+
+                            <input type="file" id="image4" class="form-control mt-2" onchange="convertToBase64('image4')" />
+                            <input type="hidden" id="image4Base64" name="image4Base64" value="@Model.image4" />
+                        </div>
+
+                    </div>
+            </fieldset>
+
+            <button type="submit" class="btn btn-submit">Add Profile</button>
+
+        </div>
+    }
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+
+    function convertToBase64(imageId) {
+        var fileInput = document.getElementById(imageId);
+
+        if (fileInput && fileInput.files && fileInput.files.length > 0) {
+            var file = fileInput.files[0];
+            var reader = new FileReader();
+
+            reader.onloadend = function () {
+                var base64 = reader.result.split(',')[1]; // Extract the Base64 part
+                document.getElementById(imageId + 'Base64').value = base64;
+                console.log("Base64 value set for:", imageId); // Debugging
+            }
+
+            reader.readAsDataURL(file);
+        } else {
+            console.error("No file selected or file input not found for:", imageId); // Debugging
+        }
+    }
+
+    $(document).ready(function () {
+        
+        $("#profileForm").submit(function (e) {
+            e.preventDefault();
+
+            var form = $(this);
+            var url = form.attr("action");
+            var formData = new FormData(form[0]);
+
+            for (var pair of formData.entries()) {
+                console.log(pair[0] + ": " + pair[1]);
+            }
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: formData,
+                processData: false, 
+                contentType: false,
+                success: function (response) {
+                    if (response.redirectUrl) {
+                        window.location.href = response.redirectUrl;
+                    } else {
+                        $("#addProfileModal .modal-body").html(response);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error:", error);
+                    alert("An error occurred while saving the profile. Please try again.");
+                }
+            });
+        });
+
+        $("input[type='file']").on("change", function () {
+            console.log("File selected for:", this.id);
+        });
+    });
+</script>
+
+<style>
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f7fa;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 100%
+    }
+
+    .page-title {
+        text-align: center;
+        font-size: 2.5em;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .form-container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        margin: 0 auto;
+        margin-top: 30px;
+    }
+
+    .form-row {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+        flex: 1;
+        padding-right: 15px;
+    }
+
+    .col-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #555;
+        font-size: 1.1em;
+        margin-bottom: 8px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 1em;
+        color: #333;
+        background-color: #f9f9f9;
+    }
+
+        .form-control:focus {
+            border-color: #007bff;
+            background-color: #fff;
+            outline: none;
+        }
+
+    .btn-submit {
+        width: 100%;
+        padding: 14px;
+        background-color: orangered;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1em;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-submit:hover {
+            background-color: orangered;
+            color: white;
+        }
+
+    .form-control[type="file"] {
+        border: 1px solid #ccc;
+        background-color: #fff;
+        padding: 12px;
+    }
+
+    media (max-width: 768px) {
+        .form-container
+
+    {
+        padding: 20px;
+        margin: 20px;
+    }
+
+    .page-title {
+        font-size: 2em;
+    }
+
+    .col-6 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    }
+</style>

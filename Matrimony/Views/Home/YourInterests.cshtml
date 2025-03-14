@@ -1,0 +1,152 @@
+﻿@model List<Matrimony.Models.Interests>
+
+@{
+    ViewBag.Title = "Your Interests";
+}
+<div class="container">
+    <h2 class="page-title">Your Interests</h2>
+
+    @foreach (var interest in Model)
+    {
+        <div class="interest-item">
+            <div class="interest-image">
+                @if (interest.ProfileImage != null)
+                {
+                    <img src="data:image/jpeg;base64,@Convert.ToBase64String(interest.ProfileImage)" alt="Profile Image" class="profile-img" />
+                }
+                else
+                {
+                    <div class="no-image">No Image</div>
+                }
+            </div>
+
+            <div class="interest-details">
+                <h3>@interest.FirstName @interest.LastName</h3>
+                <p><strong>Location:</strong> @interest.Location</p>
+                <p><strong>Occupation:</strong> @interest.Occupation</p>
+                <p><strong>Religion:</strong> @interest.Religion</p>
+                <p><strong>Marital Status:</strong> @interest.MaritalStatus</p>
+                <p><strong>Interest Status:</strong> @interest.InterestStatus</p>
+                <a href="@Url.Action("FullDetails", "Home", new { id = interest.InterestedProfileId })" class="view-details">View Full Details</a>
+            </div>
+        </div>
+    }
+</div>
+
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 100%;
+    }
+    .page-title {
+        text-align: center;
+        font-size:2em;
+        font-weight: 700;
+        color: #333;
+        margin-top: 30px;
+        text-transform: unset;
+        margin-top:10px;
+        letter-spacing: 1px;
+    }
+
+    .interest-item {
+        display: flex;
+        align-items: center;
+        padding: 20px;
+        margin: 20px auto;
+        border-radius: 10px;
+        background-color: #ffffff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        max-width: 800px;
+        cursor: pointer;
+    }
+
+    .interest-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .interest-image {
+        width: 200px;
+        height: 200px;
+        margin-right: 25px;
+        border-radius: 50%;
+        overflow: hidden;
+        background-color: #f7f7f7;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 50px;
+    }
+
+    .interest-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .no-image {
+        font-size: 16px;
+        color: #777;
+        font-weight: bold;
+    }
+
+    .interest-details {
+        flex: 1;
+    }
+
+    .interest-details h3 {
+        font-size: 1.8em;
+        margin: 0;
+        color: #333;
+        margin-left:100px;
+    }
+
+        .interest-details p {
+            font-size: 1.1em;
+            color: #666;
+            margin: 5px 0;
+            margin-left:100px;
+        }
+
+    .view-details {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 8px 15px;
+        font-size: 1em;
+        background-color: orangered;
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        margin-left:120px;
+    }
+
+        .view-details:hover {
+            background-color: orangered;
+            transform: scale(1.05);
+        }
+
+    media (max-width: 768px) {
+        .interest-item {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .interest-image {
+            margin-right: 0;
+            margin-bottom: 15px;
+        }
+
+        .interest-details h3 {
+            font-size: 1.5em;
+        }
+    }
+</style>

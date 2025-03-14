@@ -1,0 +1,186 @@
+﻿@model IEnumerable<Matrimony.Models.Profile>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ignored Profiles</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 100%;
+        }   
+        .page-title {
+            text-align: center;
+            font-size: 2em;
+            font-weight: 700;
+            color: #333;
+            margin-top:20px;
+            letter-spacing: 1px;
+        }
+
+        .interest-item {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            margin: 20px auto;
+            border-radius: 10px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            max-width: 700px;
+            cursor: pointer;
+        }
+
+        .interest-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .interest-image {
+            width: 200px;
+            height: 200px;
+            margin-right: 25px;
+            border-radius: 50%;
+            overflow: hidden;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 120px;
+        }
+
+        .interest-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .no-image {
+            font-size: 16px;
+            color: #777;
+            font-weight: bold;
+        }
+
+        .interest-details {
+            flex: 1;
+        }
+
+        .interest-details h3 {
+            font-size: 1.8em;
+            margin: 0;
+            color: #333;
+        }
+
+        .interest-details p {
+            font-size: 1.1em;
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .view-details {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            font-size: 1em;
+            background-color: orangered;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .view-details:hover {
+            background-color: orangered;
+            transform: scale(1.05);
+        }
+
+        .remove-button {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            font-size: 1em;
+            background-color: dimgray;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            border:none;
+        }
+
+            .remove-button:hover {
+                background-color: dimgray;
+                transform: scale(1.05);
+            }
+
+        media (max-width: 768px) {
+            .interest-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .interest-image {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+
+            .interest-details h3 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="page-title">Ignored Profiles</h2>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var profile in Model)
+            {
+                <div class="interest-item">
+                    <div class="interest-image">
+                        @if (profile.ProfileImage != null)
+                        {
+                            <img src="data:image/jpeg;base64,@Convert.ToBase64String(profile.ProfileImage)" alt="Profile Image" class="profile-img" />
+                        }
+                        else
+                        {
+                            <div class="no-image">No Image</div>
+                        }
+                    </div>
+
+                    <div class="interest-details">
+                        <h3>@profile.FirstName @profile.LastName</h3>
+                        <p><strong>Location:</strong> @profile.Location</p>
+                        <p><strong>Occupation:</strong> @profile.Occupation</p>
+                        <p><strong>Religion:</strong> @profile.Religion</p>
+                        <p><strong>Marital Status:</strong> @profile.MaritalStatus</p>
+
+                        <a href="@Url.Action("RemoveFromIgnored", new { profileId = profile.Id })"
+                           class="remove-button"
+                           onclick="return confirm('Are you sure you want to remove this profile from your ignored list?');"
+                           aria-label="Remove user from ignored list">
+                            Remove From Ignored List
+                        </a>
+
+                        <a href="@Url.Action("FullDetails", "Home", new { id = profile.Id })" class="view-details">View</a>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div style="margin-left:650px;margin-top:30px;">
+                        No Ignored Profiles found.
+            </div>
+        }
+    </div>
+</body>
+</html>

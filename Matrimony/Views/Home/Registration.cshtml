@@ -1,0 +1,466 @@
+﻿@model Matrimony.Models.RegistrationModel
+
+@{
+    ViewBag.Title = "Login - Matrimonial Site";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .top-menu {
+            background-color: #343a40;
+            color: white;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 10;
+        }
+
+            .top-menu h2 {
+                margin: 0;
+                color: white;
+                font-weight: 700;
+            }
+
+            .top-menu a {
+                display: inline-block;
+                padding: 7px 15px;
+                color: #ffd700;
+                text-decoration: none;
+                font-weight: 500;
+                border-radius: 5px;
+                transition: background-color 0.3s, color 0.3s;
+            }
+
+                .top-menu a:hover {
+                    background-color: orangered;
+                    color: white;
+                }
+
+        .hero-section {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+            position: relative;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 50%);
+            grid-template-rows: repeat(2, 50%);
+            width: 100%;
+            height: 100%;
+            gap: 0;
+            overflow: hidden;
+        }
+
+            .image-grid div {
+                width: 100%;
+                height: 100%;
+            }
+
+                .image-grid div img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 40%;
+            transform: translate(-50%, -50%);
+            color: white;
+            text-align: center;
+            z-index: 1;
+        }
+
+            .content h1 {
+                font-size: 50px;
+                font-weight: 700;
+            }
+
+            .content p {
+                font-size: 22px;
+                font-weight: 400;
+                margin-top: 20px;
+            }
+
+        .login-form-container {
+            position: absolute;
+            top: 53.8%;
+            right: 30px;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 10px;
+            width: 350px;
+            color: white;
+            z-index: 1;
+        }
+
+        .register-form input,
+        .register-form select,
+        .register-form button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom:8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .register-form button {
+            background-color: orangered;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+        }
+
+            .register-form button:hover {
+                background-color: coral;
+            }
+
+        .register-form h3 {
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .member-info {
+            margin-right: 40px;
+        }
+        .top-menu .menu-links {
+            display: flex;
+            gap: 15px;
+            margin-left:700px;
+        }
+        .top-menu .menu-links a {
+                color: #ffd700;
+                font-weight: 500;
+                text-decoration: none;
+                padding: 7px 15px;
+                border-radius: 5px;
+                transition: background-color 0.3s, color 0.3s;
+        }
+
+        .top-menu .menu-links a:hover {
+                    background-color: orangered;
+                    color: white;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="top-menu">
+        <h2>Tamil Tech Matrimony</h2>
+
+        <div class="menu-links">
+            <a href="/Home/About">About</a>
+            <a href="/Home/Contact">Contact</a>
+            <a href="/Home/SuccessStories">Success Stories</a>
+        </div>
+
+        <div class="member-info">
+            <span>Already a Member?</span>
+            <a href="/Home/Login">Login</a>
+        </div>
+    </div>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+
+    <div class="hero-section">
+
+        <div class="image-grid">
+            <div><img src="/Images/Christian Pic.jpg" alt="Christian Wedding"></div>
+            <div><img src="/Images/Simrranjit-and-Ridhi.jpg" alt="Sikh Wedding"></div>
+            <div><img src="/Images/Telugu Wedding.jpg" alt=" Hindu Wedding"></div>
+            <div><img src="/Images/muslim.jpg" alt="Muslim Wedding"></div>
+        </div>
+
+        <div class="content">
+            <h1>Welcome to Tamil Tech Matrimony</h1>
+            <p>Find your perfect match, connect, and start your beautiful journey together.</p>
+        </div>
+
+        <div class="login-form-container">
+            <div class="register-form">
+                <h3 style="margin-bottom:20px;">Register Now</h3>
+                @using (Html.BeginForm("Registration", "Home", FormMethod.Post))
+                 {
+                    @Html.AntiForgeryToken()
+
+                    <div>
+                        @Html.HiddenFor(m => m.ApplicantNumber)
+                    </div>
+
+                    <div>
+                        @Html.DropDownListFor(m => m.ProfileFor,
+                            new List<SelectListItem>
+                            {
+                                new SelectListItem { Value = "Myself", Text = "Myself" },
+                                new SelectListItem { Value = "Daughter", Text = "Daughter" },
+                                new SelectListItem { Value = "Brother", Text = "Brother" },
+                                new SelectListItem { Value = "Friend", Text = "Friend" }
+                            },
+                            "Select Profile For",
+                            new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.ProfileFor, "", new { @class = "text-danger" })
+                    </div>
+                    <br />
+                    <div>
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", placeholder = "firstname" })
+                        @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+                    </div>
+                    <br />
+                    <div>
+                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", placeholder = "lastname" })
+                        @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+                    </div>
+                    <br />
+                    <div>
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "email address" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                    <br />
+                    <div>
+                        @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", placeholder = "phone number" })
+                        @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
+                    </div>
+                    <br />
+                    <div>
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "password" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                    <br />
+                    <div>
+                        @Html.DropDownListFor(m => m.Country, new SelectList(new List<string> { "India", "USA" }), "Select Country", new { id = "Country", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Country, "", new { @class = "text-danger" })
+                    </div>
+                    <br />
+
+                    <div>
+                        @Html.DropDownListFor(m => m.State, new SelectList(new List<string> { "Telangana", "Tamil Nadu", "New York", "California" }), "Select State", new { id = "State", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.State, "", new { @class = "text-danger" })
+                    </div>
+                    <br />
+
+                    <div>
+                        @Html.DropDownListFor(m => m.City, new SelectList(new List<string> { "Hyderabad", "Warangal", "Chennai", "Los Angeles", "San Francisco", "New York City", "Buffalo" }), "Select City", new { id = "City", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.City, "", new { @class = "text-danger" })
+                    </div>
+                    <br />
+                    <button type="submit">Sign Up</button>
+                 }
+            </div>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    <script>
+        const locationCodes = {
+            "India": {
+                "Telangana": {
+                    "Hyderabad": "HYD",
+                    "Warangal": "WRG"
+                },
+                "Tamil Nadu": {
+                    "Chennai": "CHE",
+                    "Coimbatore": "CBE"
+                },
+            },
+            "USA": {
+                "New York": {
+                    "New York City": "NYC",
+                    "Buffalo": "BUF"
+                },
+                "California": {
+                    "Los Angeles": "LA",
+                    "San Francisco": "SF"
+                },
+            }
+        };
+
+        let generatedNumbers = new Set();
+        const storedNumbers = localStorage.getItem("generatedNumbers");
+
+        if (storedNumbers) {
+            try {
+                generatedNumbers = new Set(JSON.parse(storedNumbers));
+            } catch (e) {
+                console.error("Error parsing stored numbers: ", e);
+                generatedNumbers = new Set();
+            }
+        }
+
+        let lastGeneratedNumber = Math.max(...Array.from(generatedNumbers).map(Number), 0);
+
+
+        function generateApplicantNumber() {
+            const country = document.getElementById("Country").value;
+            const state = document.getElementById("State").value;
+            const city = document.getElementById("City").value;
+
+            if (country && state && city) {
+                const countryCode = getCountryCode(country);
+                const stateCode = getStateCode(country, state);
+                const cityCode = getCityCode(country, state, city);
+
+                if (countryCode && stateCode && cityCode) {
+                    const prefix = countryCode + stateCode + cityCode;
+
+                    lastGeneratedNumber++;
+                    const sequentialNumber = ("00000" + lastGeneratedNumber).slice(-5);
+
+                    generatedNumbers.add(sequentialNumber);
+                    localStorage.setItem("generatedNumbers", JSON.stringify(Array.from(generatedNumbers)));
+
+                    const uniqueCode = prefix + sequentialNumber;
+
+                    document.getElementById("ApplicantNumber").value = uniqueCode;
+                }
+            }
+        }
+
+        function getCountryCode(country) {
+            if (country === "India") return "IN";
+            if (country === "USA") return "US";
+            return "";
+        }
+
+        function getStateCode(country, state) {
+            if (country === "India") {
+                if (state === "Telangana") return "TG";
+                if (state === "Tamil Nadu") return "TN";
+            } else if (country === "USA") {
+                if (state === "New York") return "NY";
+                if (state === "California") return "CA";
+            }
+            return "";
+        }
+
+        function getCityCode(country, state, city) {
+            if (country === "India") {
+                if (state === "Telangana") {
+                    if (city === "Hyderabad") return "HYD";
+                    if (city === "Warangal") return "WRG";
+                } else if (state === "Tamil Nadu") {
+                    if (city === "Chennai") return "CHE";
+                    if (city === "Coimbatore") return "CBE";
+                }
+            } else if (country === "USA") {
+                if (state === "New York") {
+                    if (city === "New York City") return "NYC";
+                    if (city === "Buffalo") return "BUF";
+                } else if (state === "California") {
+                    if (city === "Los Angeles") return "LA";
+                    if (city === "San Francisco") return "SF";
+                }
+            }
+            return "";
+        }
+
+        document.getElementById("Country").addEventListener("change", generateApplicantNumber);
+        document.getElementById("State").addEventListener("change", generateApplicantNumber);
+        document.getElementById("City").addEventListener("change", generateApplicantNumber);
+
+        window.onload = generateApplicantNumber;
+
+
+        //...............//
+
+        const locationData = {
+            "India": {
+                "Telangana": ["Hyderabad", "Warangal"],
+                "Tamil Nadu": ["Chennai", "Coimbatore"]
+            },
+            "USA": {
+                "New York": ["New York City", "Buffalo"],
+                "California": ["Los Angeles", "San Francisco"]
+            }
+        };
+
+        document.getElementById("Country").addEventListener("change", function () {
+            updateStates();
+            updateCities();
+        });
+
+        document.getElementById("State").addEventListener("change", updateCities);
+
+        function updateStates() {
+            const country = document.getElementById("Country").value;
+            const stateSelect = document.getElementById("State");
+            const citySelect = document.getElementById("City");
+
+            stateSelect.innerHTML = "";
+            citySelect.innerHTML = "";
+
+            if (country === "India") {
+                const states = ["Telangana", "Tamil Nadu"];
+                addOptionsToDropdown(stateSelect, states, "Select State");
+            } else if (country === "USA") {
+                const states = ["New York", "California"];
+                addOptionsToDropdown(stateSelect, states, "Select State");
+            }
+        }
+
+        function updateCities() {
+            const country = document.getElementById("Country").value;
+            const state = document.getElementById("State").value;
+            const citySelect = document.getElementById("City");
+
+            citySelect.innerHTML = "";
+
+            if (country && state && locationData[country] && locationData[country][state]) {
+                const cities = locationData[country][state];
+                addOptionsToDropdown(citySelect, cities, "Select City");
+            }
+        }
+
+        function addOptionsToDropdown(dropdown, options, defaultOptionText) {
+            const defaultOption = document.createElement("option");
+            defaultOption.textContent = defaultOptionText;
+            dropdown.appendChild(defaultOption);
+
+            options.forEach(optionText => {
+                const option = document.createElement("option");
+                option.value = optionText;
+                option.textContent = optionText;
+                dropdown.appendChild(option);
+            });
+        }
+
+        window.onload = function () {
+            updateStates();
+            updateCities();
+        };
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,231 @@
+﻿@model Matrimony.Models.Profile
+
+@{
+    ViewBag.Title = "View Profile";
+}
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container">
+
+    <h2 class="profile-name">@Model.FirstName @Model.LastName</h2>
+
+    <div class="profile-container">
+        <div class="profile-image-container">
+            <div class="profile-image">
+                @if (Model.ProfileImage != null)
+                {
+                    <img src="data:image/jpeg;base64,@Model.ProfileImageBase64" alt="Profile Image" class="profile-img" />
+                }
+                else
+                {
+                    <div class="no-image">No Profile Image</div>
+                }
+            </div>
+        </div>
+
+        <div class="profile-details">
+            <div class="flex-container">
+                <div class="flex-item"><strong>First Name</strong> : <span>@Model.FirstName</span></div>
+                <div class="flex-item"><strong>Last Name</strong> : <span>@Model.LastName</span></div>
+                <div class="flex-item"><strong>Email</strong> : <span>@Model.Email</span></div>
+                <div class="flex-item"><strong>Phone Number</strong> : <span>@Model.PhoneNumber</span></div>
+                <div class="flex-item"><strong>Gender</strong> : <span>@Model.Gender</span></div>
+                <div class="flex-item"><strong>Height</strong> : <span>@Model.Height</span></div>
+                <div class="flex-item"><strong>Weight</strong> : <span>@Model.Weight</span></div>
+                <div class="flex-item"><strong>Date of Birth</strong> : <span>@Model.DateOfBirth</span></div>
+                <div class="flex-item"><strong>Location</strong> : <span>@Model.Location</span></div>
+                <div class="flex-item"><strong>Occupation</strong> : <span>@Model.Occupation</span></div>
+                <div class="flex-item"><strong>Religion</strong> : <span>@Model.Religion</span></div>
+                <div class="flex-item"><strong>Marital Status</strong> : <span>@Model.MaritalStatus</span></div>
+                <div class="flex-item"><strong>Mother Tongue</strong> : <span>@Model.MotherTongue</span></div>
+                <div class="flex-item"><strong>Caste</strong> : <span>@Model.Caste</span></div>
+                <div class="flex-item"><strong>Sub Caste</strong> : <span>@Model.SubCaste</span></div>
+                <div class="flex-item"><strong>Gothram</strong> : <span>@Model.Gothram</span></div>
+                <div class="flex-item"><strong>Star</strong> : <span>@Model.Star</span></div>
+                <div class="flex-item"><strong>Rasi</strong> : <span>@Model.Rasi</span></div>
+                <div class="flex-item"><strong>Address</strong> : <span>@Model.Address</span></div>
+                <div class="flex-item"><strong>City</strong> : <span>@Model.City</span></div>
+                <div class="flex-item"><strong>State</strong> : <span>@Model.State</span></div>
+                <div class="flex-item"><strong>Country</strong> : <span>@Model.Country</span></div>
+                <div class="flex-item"><strong>Guardian Contact</strong> : <span>@Model.GuardianContact</span></div>
+                <div class="flex-item"><strong>Highest Education</strong> : <span>@Model.HighestEducation</span></div>
+                <div class="flex-item"><strong>Education Details</strong> : <span>@Model.EducationDetails</span></div>
+                <div class="flex-item"><strong>Company Name</strong> : <span>@Model.CompanyName</span></div>
+                <div class="flex-item"><strong>Annual Income</strong> : <span>@Model.AnnualIncome</span></div>
+                <div class="flex-item"><strong>Father's Occupation</strong> : <span>@Model.FatherOccupation</span></div>
+                <div class="flex-item"><strong>Mother's Occupation</strong> : <span>@Model.MotherOccupation</span></div>
+                <div class="flex-item"><strong>Sibling Details</strong> : <span>@Model.SiblingDetails</span></div>
+                <div class="flex-item"><strong>Smoking</strong> : <span>@Model.Smoking</span></div>
+                <div class="flex-item"><strong>Drinking</strong> : <span>@Model.Drinking</span></div>
+                <div class="flex-item"><strong>Hobbies</strong> : <span>@Model.Hobbies</span></div>
+                <div class="flex-item"><strong>Preferred Age Range</strong> : <span>@Model.PreferredAgeRange</span></div>
+                <div class="flex-item"><strong>Preferred Height</strong> : <span>@Model.PreferredHeightRange</span></div>
+                <div class="flex-item"><strong>Religion Preference</strong> : <span>@Model.ReligionPreference</span></div>
+                <div class="flex-item"><strong>Caste Preference</strong> : <span>@Model.CastePreference</span></div>
+                <div class="flex-item"><strong>Education Preference</strong> : <span>@Model.EducationPreference</span></div>
+                <div class="flex-item"><strong>Location Preference</strong> : <span>@Model.LocationPreference</span></div>
+            </div>
+        </div>
+
+    </div>
+
+    <a href="javascript:window.history.back();" class="btn btn-secondary">Back</a>
+</div>
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f9f9f9;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .profile-name {
+        text-align: center;
+        font-size: 2.5em;
+        font-weight: 600;
+        color: #333;
+        margin-top: 20px;
+    }
+
+    .profile-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 40px;
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+    }
+
+    .profile-image-container {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .profile-image {
+        text-align: center;
+    }
+
+    .profile-img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid #ddd;
+    }
+
+    .no-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background-color: #f0f0f0;
+        color: #777;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.2em;
+        border: 4px solid #ddd;
+    }
+
+    .profile-details {
+        color: #555;
+        font-size: 1.1em;
+        line-height: 1.8;
+        width: 100%;
+        text-align: center;
+        margin-left: 320px;
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+        .profile-details p {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .profile-details strong {
+            width: 150px;
+            font-weight: 700;
+            color: #333;
+            display: inline-block;
+            text-align: left;
+            margin-right: 10px;
+        }
+
+        .profile-details span {
+            display: inline-block;
+            margin-left: 5px;
+            margin-left: 10px;
+        }
+
+    .btn-secondary {
+        background-color: #5a6268;
+        color: white;
+        margin-top: 20px;
+        width: 10%;
+        border-radius: 8px;
+        font-size: 1.1em;
+        font-weight: 400;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+        .btn-secondary:hover {
+            background-color: #4e555b;
+        }
+    .flex-container {
+        display: flex;
+        flex-wrap: wrap; /* Allow items to wrap to the next line */
+        gap: 15px; /* Space between items */
+    }
+
+    .flex-item {
+        flex: 1 1 calc(50% - 15px); /* Two items per row with gap */
+        padding: 10px;
+        border: 1px solid #ddd; /* Optional: Add borders for better visual separation */
+        border-radius: 5px;
+        background-color: #f9f9f9; /* Optional: Add background color */
+        box-sizing: border-box; /* Ensure padding and border are included in the width */
+        display: flex; /* Use flexbox for internal alignment */
+        align-items: center; /* Vertically center the content */
+        white-space: nowrap; /* Prevent text from wrapping to the next line */
+        overflow: hidden; /* Hide overflow text */
+        text-overflow: ellipsis; /* Show ellipsis (...) for overflow text */
+    }
+
+        .flex-item strong {
+            color: #333; /* Darker color for labels */
+            min-width: 120px; /* Set a minimum width for labels */
+            text-align: left; /* Align labels to the left */
+            margin-right: 10px; /* Add space between label and value */
+        }
+
+        .flex-item span {
+            color: #555; /* Lighter color for values */
+            flex: 1; /* Allow the value to take up remaining space */
+            overflow: hidden; /* Hide overflow text */
+            text-overflow: ellipsis; /* Show ellipsis (...) for overflow text */
+        }
+</style>
